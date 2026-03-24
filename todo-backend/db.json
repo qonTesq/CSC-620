@@ -1,0 +1,10 @@
+{
+  "todos": [
+    {
+      "task": "Learn React",
+      "completed": false,
+      "id": "4jqWMjhRfyY"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}

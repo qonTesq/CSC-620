@@ -1,0 +1,19 @@
+{
+  "name": "todo-backend",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "start": "npx json-server --watch db.json --port 5000",
+    "start:bun": "bunx json-server --watch db.json --port 5000"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "json-server": "^1.0.0-beta.15"
+  }
+}
