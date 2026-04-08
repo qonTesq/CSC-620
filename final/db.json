@@ -1,0 +1,74 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "Wireless Headphones",
+      "price": 49.99,
+      "description": "Bluetooth over-ear headphones with noise cancellation",
+      "image": "/images/product-placeholder.svg"
+    },
+    {
+      "id": 2,
+      "name": "USB-C Charging Cable",
+      "price": 12.99,
+      "description": "Fast charging braided cable with a 6-foot reach",
+      "image": "/images/product-placeholder.svg"
+    },
+    {
+      "id": 3,
+      "name": "Laptop Stand",
+      "price": 29.99,
+      "description": "Adjustable aluminum stand for laptops up to 17 inches",
+      "image": "/images/product-placeholder.svg"
+    },
+    {
+      "id": 4,
+      "name": "Mechanical Keyboard",
+      "price": 79.99,
+      "description": "Compact RGB keyboard with tactile switches",
+      "image": "/images/product-placeholder.svg"
+    },
+    {
+      "id": 5,
+      "name": "Mouse Pad XL",
+      "price": 19.99,
+      "description": "Extended desk mat with a non-slip rubber base",
+      "image": "/images/product-placeholder.svg"
+    },
+    {
+      "id": 6,
+      "name": "Webcam HD",
+      "price": 39.99,
+      "description": "1080p webcam with autofocus and built-in microphone",
+      "image": "/images/product-placeholder.svg"
+    },
+    {
+      "id": 7,
+      "name": "Portable Speaker",
+      "price": 34.99,
+      "description": "Water-resistant Bluetooth speaker with 12-hour battery",
+      "image": "/images/product-placeholder.svg"
+    },
+    {
+      "id": 8,
+      "name": "Phone Case",
+      "price": 14.99,
+      "description": "Shock-absorbing case with a soft-touch finish",
+      "image": "/images/product-placeholder.svg"
+    },
+    {
+      "id": 9,
+      "name": "LED Desk Lamp",
+      "price": 24.99,
+      "description": "Dimmable lamp with adjustable color temperature",
+      "image": "/images/product-placeholder.svg"
+    },
+    {
+      "id": 10,
+      "name": "External SSD 500GB",
+      "price": 59.99,
+      "description": "Pocket-sized solid state drive with USB 3.2 support",
+      "image": "/images/product-placeholder.svg"
+    }
+  ]
+}
