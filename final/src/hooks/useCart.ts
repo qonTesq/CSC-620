@@ -28,7 +28,8 @@ function isCartItem(value: unknown): value is CartItem {
     typeof item.name === "string" &&
     typeof item.price === "number" &&
     typeof item.quantity === "number" &&
-    item.quantity > 0
+    item.quantity > 0 &&
+    (item.brand === undefined || typeof item.brand === "string")
   );
 }
 
@@ -62,6 +63,7 @@ export function useCart() {
               name: product.name,
               price: product.price,
               quantity: 1,
+              brand: product.brand,
             },
           ],
     );

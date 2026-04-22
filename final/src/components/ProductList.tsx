@@ -6,12 +6,14 @@ interface ProductListProps {
   products: Product[];
   searchQuery: string;
   onAddToCart: (product: Product) => void;
+  onSelect: (product: Product) => void;
 }
 
 export function ProductList({
   products,
   searchQuery,
   onAddToCart,
+  onSelect,
 }: ProductListProps) {
   const normalizedQuery = searchQuery.trim().toLowerCase();
   const filteredProducts = normalizedQuery
@@ -27,6 +29,7 @@ export function ProductList({
           key={product.id}
           product={product}
           onAddToCart={onAddToCart}
+          onSelect={onSelect}
         />
       ))}
     </div>

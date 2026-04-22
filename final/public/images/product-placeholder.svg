@@ -8,8 +8,8 @@
 >
   <title id="title">Product placeholder image</title>
   <desc id="desc">A simple placeholder for product previews</desc>
-  <rect width="400" height="300" rx="24" fill="#d9e2ec" />
-  <rect x="48" y="48" width="304" height="204" rx="20" fill="#bcccdc" />
+  <rect width="400" height="300" fill="#d9e2ec" />
+  <rect x="48" y="48" width="304" height="204" fill="#bcccdc" />
   <circle cx="134" cy="120" r="28" fill="#9fb3c8" />
   <path d="M88 220L154 154L202 194L242 146L312 220H88Z" fill="#829ab1" />
 </svg>

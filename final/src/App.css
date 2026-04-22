@@ -60,8 +60,9 @@
     margin: 0;
 }
 
-.product-card__description {
+.product-card__brand {
     margin: 0;
+    color: #6b7280;
 }
 
 .product-card button {
@@ -73,6 +74,106 @@
     margin: 0;
     padding: 24px;
     text-align: center;
+}
+
+.product-card__link {
+    all: unset;
+    display: contents;
+    cursor: pointer;
+}
+
+.product-card__link img,
+.product-card__link h3 {
+    cursor: pointer;
+}
+
+.product-detail {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.product-detail__back {
+    align-self: flex-start;
+    padding: 0.5rem 0.9rem;
+}
+
+.product-detail__body {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+    gap: 24px;
+}
+
+.product-detail__media img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: contain;
+}
+
+.product-detail__info {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.product-detail__info h2,
+.product-detail__brand,
+.product-detail__rating,
+.product-detail__price,
+.product-detail__stock,
+.product-detail__description {
+    margin: 0;
+}
+
+.product-detail__price {
+    font-size: 1.75rem;
+    font-weight: 600;
+}
+
+.product-detail__section {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.product-detail__section h3 {
+    margin: 0;
+}
+
+.product-detail__section ul {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.product-detail__specs {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 8px 20px;
+    margin: 0;
+}
+
+.product-detail__specs > div {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.product-detail__specs dt,
+.product-detail__specs dd {
+    margin: 0;
+}
+
+.product-detail__add {
+    align-self: flex-start;
+    padding: 0.8rem 1.2rem;
+}
+
+@media (max-width: 720px) {
+    .product-detail__body {
+        grid-template-columns: 1fr;
+    }
 }
 
 .cart {
@@ -103,6 +204,17 @@
 .cart-item__name,
 .cart__footer {
     margin: 0;
+}
+
+.cart-item__name-group {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.cart-item__brand {
+    color: #6b7280;
+    font-size: 0.85em;
 }
 
 .cart__empty {

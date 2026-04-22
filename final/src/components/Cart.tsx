@@ -36,7 +36,12 @@ export function Cart({
               return (
                 <li key={item.id} className="cart-item">
                   <div className="cart-item__details">
-                    <span className="cart-item__name">{item.name}</span>
+                    <div className="cart-item__name-group">
+                      <span className="cart-item__name">{item.name}</span>
+                      {item.brand && (
+                        <span className="cart-item__brand">{item.brand}</span>
+                      )}
+                    </div>
                     <span className="cart-item__line-total">
                       ${(item.price * item.quantity).toFixed(2)}
                     </span>

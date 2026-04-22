@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 import "./App.css";
 import { Cart } from "./components/Cart";
+import { ProductDetail } from "./components/ProductDetail";
 import { ProductList } from "./components/ProductList";
 import { SearchBar } from "./components/SearchBar";
 import { useCart } from "./hooks/useCart";
@@ -16,8 +17,16 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedProductId, setSelectedProductId] = useState<number | null>(
+    null,
+  );
   const { cartItems, addToCart, increment, decrement, clearCart, total } =
     useCart();
+
+  const selectedProduct =
+    selectedProductId !== null
+      ? products.find((product) => product.id === selectedProductId) ?? null
+      : null;
 
   useEffect(() => {
     const abortController = new AbortController();
@@ -50,19 +59,30 @@ function App() {
   return (
     <div className="app-shell">
       <main className="catalog">
-        <header className="catalog__header">
-          <h1>Browse products and build your cart</h1>
-          <SearchBar query={searchQuery} onQueryChange={setSearchQuery} />
-        </header>
-
-        {statusMessage ? (
-          <p className="catalog__status">{statusMessage}</p>
-        ) : (
-          <ProductList
-            products={products}
-            searchQuery={searchQuery}
+        {selectedProduct ? (
+          <ProductDetail
+            product={selectedProduct}
             onAddToCart={addToCart}
+            onBack={() => setSelectedProductId(null)}
           />
+        ) : (
+          <>
+            <header className="catalog__header">
+              <h1>Browse products and build your cart</h1>
+              <SearchBar query={searchQuery} onQueryChange={setSearchQuery} />
+            </header>
+
+            {statusMessage ? (
+              <p className="catalog__status">{statusMessage}</p>
+            ) : (
+              <ProductList
+                products={products}
+                searchQuery={searchQuery}
+                onAddToCart={addToCart}
+                onSelect={(product) => setSelectedProductId(product.id)}
+              />
+            )}
+          </>
         )}
       </main>
 

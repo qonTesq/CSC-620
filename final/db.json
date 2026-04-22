@@ -5,70 +5,230 @@
       "name": "Wireless Headphones",
       "price": 49.99,
       "description": "Bluetooth over-ear headphones with noise cancellation",
-      "image": "/images/product-placeholder.svg"
+      "image": "/images/product-placeholder.svg",
+      "brand": "SoundCore",
+      "rating": 4.5,
+      "reviewCount": 1284,
+      "stock": 42,
+      "features": [
+        "Active noise cancellation",
+        "30-hour battery life",
+        "Bluetooth 5.3",
+        "Foldable design with carrying case"
+      ],
+      "specs": {
+        "Driver": "40mm dynamic",
+        "Weight": "250g",
+        "Charging": "USB-C",
+        "Warranty": "2 years"
+      }
     },
     {
       "id": 2,
       "name": "USB-C Charging Cable",
       "price": 12.99,
       "description": "Fast charging braided cable with a 6-foot reach",
-      "image": "/images/product-placeholder.svg"
+      "image": "/images/product-placeholder.svg",
+      "brand": "Anker",
+      "rating": 4.7,
+      "reviewCount": 5421,
+      "stock": 210,
+      "features": [
+        "6ft braided nylon jacket",
+        "100W Power Delivery",
+        "USB 2.0 data transfer",
+        "10,000-bend tested"
+      ],
+      "specs": {
+        "Length": "6 ft / 1.8 m",
+        "Output": "100W / 5A",
+        "Connector": "USB-C to USB-C",
+        "Warranty": "18 months"
+      }
     },
     {
       "id": 3,
       "name": "Laptop Stand",
       "price": 29.99,
       "description": "Adjustable aluminum stand for laptops up to 17 inches",
-      "image": "/images/product-placeholder.svg"
+      "image": "/images/product-placeholder.svg",
+      "brand": "Nulaxy",
+      "rating": 4.6,
+      "reviewCount": 892,
+      "stock": 58,
+      "features": [
+        "Fits 10-17 inch laptops",
+        "Six adjustable height levels",
+        "Heat-dissipating aluminum",
+        "Non-slip silicone pads"
+      ],
+      "specs": {
+        "Material": "Aluminum alloy",
+        "Max load": "20 lbs",
+        "Foldable": "Yes",
+        "Warranty": "1 year"
+      }
     },
     {
       "id": 4,
       "name": "Mechanical Keyboard",
       "price": 79.99,
       "description": "Compact RGB keyboard with tactile switches",
-      "image": "/images/product-placeholder.svg"
+      "image": "/images/product-placeholder.svg",
+      "brand": "Keychron",
+      "rating": 4.4,
+      "reviewCount": 2103,
+      "stock": 31,
+      "features": [
+        "Hot-swappable tactile switches",
+        "Per-key RGB backlighting",
+        "75% compact layout",
+        "USB-C and Bluetooth 5.1"
+      ],
+      "specs": {
+        "Layout": "75% (84 keys)",
+        "Switch type": "Tactile",
+        "Connection": "Wired / Wireless",
+        "Warranty": "1 year"
+      }
     },
     {
       "id": 5,
       "name": "Mouse Pad XL",
       "price": 19.99,
       "description": "Extended desk mat with a non-slip rubber base",
-      "image": "/images/product-placeholder.svg"
+      "image": "/images/product-placeholder.svg",
+      "brand": "Corsair",
+      "rating": 4.8,
+      "reviewCount": 674,
+      "stock": 120,
+      "features": [
+        "35\" x 15\" extended surface",
+        "Stitched anti-fray edges",
+        "Water-resistant micro-weave",
+        "Non-slip rubber base"
+      ],
+      "specs": {
+        "Size": "35 x 15 x 0.12 in",
+        "Material": "Micro-weave cloth",
+        "Base": "Natural rubber",
+        "Washable": "Yes"
+      }
     },
     {
       "id": 6,
       "name": "Webcam HD",
       "price": 39.99,
       "description": "1080p webcam with autofocus and built-in microphone",
-      "image": "/images/product-placeholder.svg"
+      "image": "/images/product-placeholder.svg",
+      "brand": "Logitech",
+      "rating": 4.3,
+      "reviewCount": 1537,
+      "stock": 75,
+      "features": [
+        "Full HD 1080p at 30fps",
+        "Autofocus and auto light correction",
+        "Dual omnidirectional mics",
+        "Privacy shutter included"
+      ],
+      "specs": {
+        "Resolution": "1920 x 1080",
+        "Field of view": "78°",
+        "Mount": "Clip + tripod thread",
+        "Warranty": "2 years"
+      }
     },
     {
       "id": 7,
       "name": "Portable Speaker",
       "price": 34.99,
       "description": "Water-resistant Bluetooth speaker with 12-hour battery",
-      "image": "/images/product-placeholder.svg"
+      "image": "/images/product-placeholder.svg",
+      "brand": "JBL",
+      "rating": 4.6,
+      "reviewCount": 3012,
+      "stock": 64,
+      "features": [
+        "IPX7 waterproof rating",
+        "12-hour playtime",
+        "Bluetooth 5.1 with multipoint",
+        "Built-in speakerphone"
+      ],
+      "specs": {
+        "Output power": "10W",
+        "Battery": "2600 mAh",
+        "Charging": "USB-C",
+        "Warranty": "1 year"
+      }
     },
     {
       "id": 8,
       "name": "Phone Case",
       "price": 14.99,
       "description": "Shock-absorbing case with a soft-touch finish",
-      "image": "/images/product-placeholder.svg"
+      "image": "/images/product-placeholder.svg",
+      "brand": "Spigen",
+      "rating": 4.5,
+      "reviewCount": 4211,
+      "stock": 300,
+      "features": [
+        "Military-grade drop protection",
+        "Raised bezels for screen and camera",
+        "Wireless-charging compatible",
+        "Soft-touch matte finish"
+      ],
+      "specs": {
+        "Material": "TPU + polycarbonate",
+        "Drop rating": "MIL-STD-810G",
+        "Weight": "32g",
+        "Warranty": "1 year"
+      }
     },
     {
       "id": 9,
       "name": "LED Desk Lamp",
       "price": 24.99,
       "description": "Dimmable lamp with adjustable color temperature",
-      "image": "/images/product-placeholder.svg"
+      "image": "/images/product-placeholder.svg",
+      "brand": "TaoTronics",
+      "rating": 4.7,
+      "reviewCount": 985,
+      "stock": 48,
+      "features": [
+        "5 color temperatures, 7 brightness levels",
+        "Eye-caring flicker-free LED",
+        "USB charging port on base",
+        "1-hour auto-off timer"
+      ],
+      "specs": {
+        "Power": "10W LED",
+        "Color temp": "2700K - 6500K",
+        "Control": "Touch panel",
+        "Warranty": "2 years"
+      }
     },
     {
       "id": 10,
       "name": "External SSD 500GB",
       "price": 59.99,
       "description": "Pocket-sized solid state drive with USB 3.2 support",
-      "image": "/images/product-placeholder.svg"
+      "image": "/images/product-placeholder.svg",
+      "brand": "Samsung",
+      "rating": 4.8,
+      "reviewCount": 7620,
+      "stock": 28,
+      "features": [
+        "Up to 1050 MB/s read speeds",
+        "Shock-resistant to 6ft drops",
+        "AES 256-bit hardware encryption",
+        "Pocket-sized aluminum body"
+      ],
+      "specs": {
+        "Capacity": "500 GB",
+        "Interface": "USB 3.2 Gen 2",
+        "Dimensions": "2.24 x 1.77 x 0.31 in",
+        "Warranty": "3 years"
+      }
     }
   ]
 }
