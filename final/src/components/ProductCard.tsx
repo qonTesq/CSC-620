@@ -1,6 +1,5 @@
 import type { Product } from "../types";
 
-import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,7 +12,7 @@ import {
 
 interface ProductCardProps {
   product: Product;
-  onAddToCart: (product: Product) => void;
+  onAddToCart: (product: Product, quantity: number) => void;
   onSelect: (product: Product) => void;
 }
 
@@ -26,15 +25,12 @@ export function ProductCard({
 
   return (
     <Card size="sm" className="flex h-full flex-col">
-      <button
-        type="button"
+      <img
+        src={image || "/images/product-placeholder.svg"}
+        alt={name}
         onClick={() => onSelect(product)}
-        className="block text-left"
-      >
-        <AspectRatio ratio={1}>
-          <img src={image} alt={name} className="size-full object-cover" />
-        </AspectRatio>
-      </button>
+        className="aspect-square w-full cursor-pointer object-cover"
+      />
       <CardHeader>
         <CardTitle className="line-clamp-2">{name}</CardTitle>
         {brand && (
@@ -44,13 +40,10 @@ export function ProductCard({
         )}
       </CardHeader>
       <CardContent className="mt-auto">
-        <p className="font-heading text-lg">${price.toFixed(2)}</p>
+        <p className="text-lg">${price.toFixed(2)}</p>
       </CardContent>
       <CardFooter>
-        <Button
-          className="w-full"
-          onClick={() => onAddToCart(product)}
-        >
+        <Button className="w-full" onClick={() => onAddToCart(product, 1)}>
           Add to Cart
         </Button>
       </CardFooter>

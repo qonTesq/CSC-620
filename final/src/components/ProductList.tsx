@@ -5,7 +5,7 @@ import { ProductCard } from "./ProductCard";
 interface ProductListProps {
   products: Product[];
   searchQuery: string;
-  onAddToCart: (product: Product) => void;
+  onAddToCart: (product: Product, quantity: number) => void;
   onSelect: (product: Product) => void;
 }
 
@@ -23,7 +23,7 @@ export function ProductList({
     : products;
 
   return filteredProducts.length > 0 ? (
-    <div className="grid gap-4 [grid-template-columns:repeat(auto-fill,minmax(220px,1fr))]">
+    <div className="grid gap-6 grid-cols-[repeat(auto-fill,minmax(220px,1fr))] md:gap-8">
       {filteredProducts.map((product) => (
         <ProductCard
           key={product.id}

@@ -1,5 +1,11 @@
+import { useState } from "react";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { ArrowLeft02Icon, StarIcon } from "@hugeicons/core-free-icons";
+import {
+  Add01Icon,
+  ArrowLeft02Icon,
+  MinusSignIcon,
+  StarIcon,
+} from "@hugeicons/core-free-icons";
 
 import type { Product } from "../types";
 
@@ -11,7 +17,7 @@ import { Separator } from "@/components/ui/separator";
 
 interface ProductDetailProps {
   product: Product;
-  onAddToCart: (product: Product) => void;
+  onAddToCart: (product: Product, quantity: number) => void;
   onBack: () => void;
 }
 
@@ -30,10 +36,14 @@ export function ProductDetail({
     rating,
     reviewCount,
     specs,
-    stock,
   } = product;
 
-  const inStock = stock === undefined || stock > 0;
+  const [quantity, setQuantity] = useState(1);
+
+  const handleAdd = () => {
+    onAddToCart(product, quantity);
+    setQuantity(1);
+  };
 
   return (
     <div className="flex flex-col gap-6">
@@ -45,7 +55,11 @@ export function ProductDetail({
       <Card>
         <CardContent className="grid gap-6 md:grid-cols-2 md:py-0">
           <AspectRatio ratio={1} className="overflow-hidden rounded-3xl">
-            <img src={image} alt={name} className="size-full object-cover" />
+            <img
+              src={image || "/images/product-placeholder.svg"}
+              alt={name}
+              className="size-full object-cover"
+            />
           </AspectRatio>
 
           <div className="flex flex-col gap-3">
@@ -72,22 +86,39 @@ export function ProductDetail({
               </div>
             )}
 
-            <p className="font-heading text-3xl">${price.toFixed(2)}</p>
-            <div>
-              <Badge variant={inStock ? "secondary" : "destructive"}>
-                {inStock ? `In stock${stock ? ` (${stock} left)` : ""}` : "Out of stock"}
-              </Badge>
-            </div>
+            <p className="text-3xl">${price.toFixed(2)}</p>
 
             <p className="text-sm text-muted-foreground">{description}</p>
 
-            <Button
-              className="mt-2 self-start"
-              onClick={() => onAddToCart(product)}
-              disabled={!inStock}
-            >
-              Add to Cart
-            </Button>
+            <div className="mt-2 flex flex-wrap items-center gap-3">
+              <div className="flex items-center gap-3">
+                <Button
+                  size="icon"
+                  variant="outline"
+                  aria-label={`Decrease quantity of ${name}`}
+                  onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+                  disabled={quantity <= 1}
+                >
+                  <HugeiconsIcon icon={MinusSignIcon} strokeWidth={2} />
+                </Button>
+                <span
+                  className="text-sm font-medium tabular-nums"
+                  aria-label={`Quantity ${quantity}`}
+                >
+                  {quantity}
+                </span>
+                <Button
+                  size="icon"
+                  variant="outline"
+                  aria-label={`Increase quantity of ${name}`}
+                  onClick={() => setQuantity((q) => Math.min(10, q + 1))}
+                  disabled={quantity >= 10}
+                >
+                  <HugeiconsIcon icon={Add01Icon} strokeWidth={2} />
+                </Button>
+              </div>
+              <Button onClick={handleAdd}>Add to Cart</Button>
+            </div>
           </div>
         </CardContent>
 

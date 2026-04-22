@@ -7,7 +7,6 @@ export interface Product {
   brand?: string;
   rating?: number;
   reviewCount?: number;
-  stock?: number;
   features?: string[];
   specs?: Record<string, string>;
 }

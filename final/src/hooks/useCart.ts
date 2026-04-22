@@ -52,21 +52,29 @@ export function useCart() {
     }
   }, [cartItems]);
 
-  const addToCart = (product: Product) =>
-    setCartItems((currentItems) =>
-      currentItems.some((item) => item.id === product.id)
-        ? changeQuantity(currentItems, product.id, 1)
-        : [
-            ...currentItems,
-            {
-              id: product.id,
-              name: product.name,
-              price: product.price,
-              quantity: 1,
-              brand: product.brand,
-            },
-          ],
-    );
+  const addToCart = (product: Product, quantity = 1) =>
+    setCartItems((currentItems) => {
+      const existing = currentItems.find((item) => item.id === product.id);
+
+      if (existing) {
+        return currentItems.map((item) =>
+          item.id === product.id
+            ? { ...item, quantity: item.quantity + quantity }
+            : item,
+        );
+      }
+
+      return [
+        ...currentItems,
+        {
+          id: product.id,
+          name: product.name,
+          price: product.price,
+          quantity,
+          brand: product.brand,
+        },
+      ];
+    });
 
   const increment = (id: number) =>
     setCartItems((currentItems) => changeQuantity(currentItems, id, 1));
