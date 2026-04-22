@@ -1,4 +1,22 @@
+import { HugeiconsIcon } from "@hugeicons/react";
+import {
+  Add01Icon,
+  Delete02Icon,
+  MinusSignIcon,
+} from "@hugeicons/core-free-icons";
+
 import type { CartItem } from "../types";
+
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Separator } from "@/components/ui/separator";
 
 interface CartProps {
   cartItems: CartItem[];
@@ -19,71 +37,104 @@ export function Cart({
   const itemCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
-    <aside className="cart" aria-label="Shopping cart">
-      <div className="cart__header">
-        <h2>Cart</h2>
-        <span>{itemCount} item(s)</span>
-      </div>
+    <Card
+      aria-label="Shopping cart"
+      className="lg:sticky lg:top-24 lg:self-start"
+    >
+      <CardHeader className="flex flex-row items-center justify-between">
+        <CardTitle>Cart</CardTitle>
+        <span className="text-sm text-muted-foreground">
+          {itemCount} item(s)
+        </span>
+      </CardHeader>
 
       {isEmpty ? (
-        <p className="cart__empty">Cart is empty</p>
+        <CardContent>
+          <p className="text-sm text-muted-foreground">Cart is empty</p>
+        </CardContent>
       ) : (
         <>
-          <ul className="cart__list">
-            {cartItems.map((item) => {
-              const singleItem = item.quantity === 1;
+          <CardContent>
+            <ScrollArea className="max-h-[50vh] pr-3">
+              <ul className="flex flex-col gap-4">
+                {cartItems.map((item) => {
+                  const singleItem = item.quantity === 1;
 
-              return (
-                <li key={item.id} className="cart-item">
-                  <div className="cart-item__details">
-                    <div className="cart-item__name-group">
-                      <span className="cart-item__name">{item.name}</span>
-                      {item.brand && (
-                        <span className="cart-item__brand">{item.brand}</span>
-                      )}
-                    </div>
-                    <span className="cart-item__line-total">
-                      ${(item.price * item.quantity).toFixed(2)}
-                    </span>
-                  </div>
+                  return (
+                    <li key={item.id} className="flex flex-col gap-2">
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="flex flex-col">
+                          <span className="text-sm font-medium">
+                            {item.name}
+                          </span>
+                          {item.brand && (
+                            <span className="text-xs text-muted-foreground">
+                              {item.brand}
+                            </span>
+                          )}
+                        </div>
+                        <span className="text-sm font-medium">
+                          ${(item.price * item.quantity).toFixed(2)}
+                        </span>
+                      </div>
 
-                  <div className="cart-item__controls">
-                    <button
-                      type="button"
-                      aria-label={
-                        singleItem
-                          ? `Remove ${item.name} from cart`
-                          : `Decrease quantity of ${item.name}`
-                      }
-                      onClick={() => onDecrement(item.id)}
-                    >
-                      {singleItem ? "🗑" : "−"}
-                    </button>
-                    <span aria-label={`Quantity ${item.quantity}`}>
-                      {item.quantity}
-                    </span>
-                    <button
-                      type="button"
-                      aria-label={`Increase quantity of ${item.name}`}
-                      onClick={() => onIncrement(item.id)}
-                    >
-                      +
-                    </button>
-                  </div>
-                </li>
-              );
-            })}
-          </ul>
+                      <div className="flex items-center gap-2">
+                        <Button
+                          size="icon-sm"
+                          variant="outline"
+                          aria-label={
+                            singleItem
+                              ? `Remove ${item.name} from cart`
+                              : `Decrease quantity of ${item.name}`
+                          }
+                          onClick={() => onDecrement(item.id)}
+                        >
+                          <HugeiconsIcon
+                            icon={singleItem ? Delete02Icon : MinusSignIcon}
+                            strokeWidth={2}
+                          />
+                        </Button>
+                        <span
+                          className="min-w-6 text-center text-sm"
+                          aria-label={`Quantity ${item.quantity}`}
+                        >
+                          {item.quantity}
+                        </span>
+                        <Button
+                          size="icon-sm"
+                          variant="outline"
+                          aria-label={`Increase quantity of ${item.name}`}
+                          onClick={() => onIncrement(item.id)}
+                        >
+                          <HugeiconsIcon icon={Add01Icon} strokeWidth={2} />
+                        </Button>
+                      </div>
+                    </li>
+                  );
+                })}
+              </ul>
+            </ScrollArea>
+          </CardContent>
 
-          <div className="cart__footer">
-            <span>Total</span>
-            <strong>${total.toFixed(2)}</strong>
-          </div>
-          <button type="button" className="cart__clear" onClick={onClear}>
-            Clear cart
-          </button>
+          <Separator />
+
+          <CardFooter className="flex items-center justify-between">
+            <span className="text-sm text-muted-foreground">Total</span>
+            <strong className="font-heading text-lg">
+              ${total.toFixed(2)}
+            </strong>
+          </CardFooter>
+          <CardContent>
+            <Button
+              variant="destructive"
+              className="w-full"
+              onClick={onClear}
+            >
+              Clear cart
+            </Button>
+          </CardContent>
         </>
       )}
-    </aside>
+    </Card>
   );
 }

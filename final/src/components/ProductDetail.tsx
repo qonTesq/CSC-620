@@ -1,4 +1,13 @@
+import { HugeiconsIcon } from "@hugeicons/react";
+import { ArrowLeft02Icon, StarIcon } from "@hugeicons/core-free-icons";
+
 import type { Product } from "../types";
+
+import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 
 interface ProductDetailProps {
   product: Product;
@@ -27,71 +36,92 @@ export function ProductDetail({
   const inStock = stock === undefined || stock > 0;
 
   return (
-    <article className="product-detail">
-      <button type="button" className="product-detail__back" onClick={onBack}>
-        ← Back to products
-      </button>
+    <div className="flex flex-col gap-6">
+      <Button variant="ghost" size="sm" onClick={onBack} className="self-start">
+        <HugeiconsIcon icon={ArrowLeft02Icon} strokeWidth={2} />
+        Back to products
+      </Button>
 
-      <div className="product-detail__body">
-        <div className="product-detail__media">
-          <img src={image} alt={name} />
-        </div>
+      <Card>
+        <CardContent className="grid gap-6 md:grid-cols-2 md:py-0">
+          <AspectRatio ratio={1} className="overflow-hidden rounded-3xl">
+            <img src={image} alt={name} className="size-full object-cover" />
+          </AspectRatio>
 
-        <div className="product-detail__info">
-          {brand && <p className="product-detail__brand">{brand}</p>}
-          <h2>{name}</h2>
+          <div className="flex flex-col gap-3">
+            {brand && (
+              <div>
+                <Badge variant="secondary">{brand}</Badge>
+              </div>
+            )}
+            <h2 className="font-heading text-2xl">{name}</h2>
 
-          {(rating !== undefined || reviewCount !== undefined) && (
-            <p className="product-detail__rating">
-              {rating !== undefined && <span>★ {rating.toFixed(1)}</span>}
-              {reviewCount !== undefined && (
-                <span> ({reviewCount.toLocaleString()} reviews)</span>
-              )}
-            </p>
-          )}
+            {(rating !== undefined || reviewCount !== undefined) && (
+              <div className="flex items-center gap-2">
+                {rating !== undefined && (
+                  <Badge variant="outline">
+                    <HugeiconsIcon icon={StarIcon} strokeWidth={2} />
+                    {rating.toFixed(1)}
+                  </Badge>
+                )}
+                {reviewCount !== undefined && (
+                  <span className="text-sm text-muted-foreground">
+                    ({reviewCount.toLocaleString()} reviews)
+                  </span>
+                )}
+              </div>
+            )}
 
-          <p className="product-detail__price">${price.toFixed(2)}</p>
-          <p className="product-detail__stock">
-            {inStock ? `In stock${stock ? ` (${stock} left)` : ""}` : "Out of stock"}
-          </p>
+            <p className="font-heading text-3xl">${price.toFixed(2)}</p>
+            <div>
+              <Badge variant={inStock ? "secondary" : "destructive"}>
+                {inStock ? `In stock${stock ? ` (${stock} left)` : ""}` : "Out of stock"}
+              </Badge>
+            </div>
 
-          <p className="product-detail__description">{description}</p>
+            <p className="text-sm text-muted-foreground">{description}</p>
 
-          {features && features.length > 0 && (
-            <section className="product-detail__section">
-              <h3>About this item</h3>
-              <ul>
+            <Button
+              className="mt-2 self-start"
+              onClick={() => onAddToCart(product)}
+              disabled={!inStock}
+            >
+              Add to Cart
+            </Button>
+          </div>
+        </CardContent>
+
+        {features && features.length > 0 && (
+          <>
+            <Separator />
+            <CardContent className="flex flex-col gap-2">
+              <h3 className="font-heading text-lg">About this item</h3>
+              <ul className="list-disc pl-5 text-sm text-muted-foreground">
                 {features.map((feature) => (
                   <li key={feature}>{feature}</li>
                 ))}
               </ul>
-            </section>
-          )}
+            </CardContent>
+          </>
+        )}
 
-          <button
-            type="button"
-            className="product-detail__add"
-            onClick={() => onAddToCart(product)}
-            disabled={!inStock}
-          >
-            Add to Cart
-          </button>
-        </div>
-      </div>
-
-      {specs && Object.keys(specs).length > 0 && (
-        <section className="product-detail__section">
-          <h3>Specifications</h3>
-          <dl className="product-detail__specs">
-            {Object.entries(specs).map(([key, value]) => (
-              <div key={key}>
-                <dt>{key}</dt>
-                <dd>{value}</dd>
-              </div>
-            ))}
-          </dl>
-        </section>
-      )}
-    </article>
+        {specs && Object.keys(specs).length > 0 && (
+          <>
+            <Separator />
+            <CardContent className="flex flex-col gap-2">
+              <h3 className="font-heading text-lg">Specifications</h3>
+              <dl className="grid gap-2 sm:grid-cols-2">
+                {Object.entries(specs).map(([key, value]) => (
+                  <div key={key} className="flex flex-col">
+                    <dt className="text-xs text-muted-foreground">{key}</dt>
+                    <dd className="text-sm">{value}</dd>
+                  </div>
+                ))}
+              </dl>
+            </CardContent>
+          </>
+        )}
+      </Card>
+    </div>
   );
 }

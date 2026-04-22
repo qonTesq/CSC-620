@@ -23,7 +23,7 @@ export function ProductList({
     : products;
 
   return filteredProducts.length > 0 ? (
-    <div className="product-grid">
+    <div className="grid gap-4 [grid-template-columns:repeat(auto-fill,minmax(220px,1fr))]">
       {filteredProducts.map((product) => (
         <ProductCard
           key={product.id}
@@ -34,6 +34,6 @@ export function ProductList({
       ))}
     </div>
   ) : (
-    <p className="products-empty">No products found</p>
+    <p className="text-muted-foreground">No products found</p>
   );
 }

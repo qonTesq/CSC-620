@@ -1,5 +1,16 @@
 import type { Product } from "../types";
 
+import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+
 interface ProductCardProps {
   product: Product;
   onAddToCart: (product: Product) => void;
@@ -14,20 +25,35 @@ export function ProductCard({
   const { brand, image, name, price } = product;
 
   return (
-    <article className="product-card">
+    <Card size="sm" className="flex h-full flex-col">
       <button
         type="button"
-        className="product-card__link"
         onClick={() => onSelect(product)}
+        className="block text-left"
       >
-        <img src={image} alt={name} />
-        <h3>{name}</h3>
+        <AspectRatio ratio={1}>
+          <img src={image} alt={name} className="size-full object-cover" />
+        </AspectRatio>
       </button>
-      {brand && <p className="product-card__brand">{brand}</p>}
-      <p className="product-card__price">${price.toFixed(2)}</p>
-      <button type="button" onClick={() => onAddToCart(product)}>
-        Add to Cart
-      </button>
-    </article>
+      <CardHeader>
+        <CardTitle className="line-clamp-2">{name}</CardTitle>
+        {brand && (
+          <div>
+            <Badge variant="secondary">{brand}</Badge>
+          </div>
+        )}
+      </CardHeader>
+      <CardContent className="mt-auto">
+        <p className="font-heading text-lg">${price.toFixed(2)}</p>
+      </CardContent>
+      <CardFooter>
+        <Button
+          className="w-full"
+          onClick={() => onAddToCart(product)}
+        >
+          Add to Cart
+        </Button>
+      </CardFooter>
+    </Card>
   );
 }
