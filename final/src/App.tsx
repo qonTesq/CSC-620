@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 
-import "./App.css";
 import { Cart } from "./components/Cart";
 import { ProductDetail } from "./components/ProductDetail";
 import { ProductList } from "./components/ProductList";
@@ -25,7 +24,7 @@ function App() {
 
   const selectedProduct =
     selectedProductId !== null
-      ? products.find((product) => product.id === selectedProductId) ?? null
+      ? (products.find((product) => product.id === selectedProductId) ?? null)
       : null;
 
   useEffect(() => {
