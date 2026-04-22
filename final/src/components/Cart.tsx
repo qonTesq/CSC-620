@@ -62,7 +62,7 @@ export function CartBody({
                 <div className="flex items-center gap-2">
                   <Button
                     size="icon-sm"
-                    variant="outline"
+                    variant={singleItem ? "destructive" : "outline"}
                     aria-label={
                       singleItem
                         ? `Remove ${item.name} from cart`
@@ -104,7 +104,7 @@ export function CartBody({
           <strong className="text-lg">${total.toFixed(2)}</strong>
         </div>
         <Button variant="destructive" className="w-full" onClick={onClear}>
-          Clear cart
+          Clear
         </Button>
       </div>
     </div>

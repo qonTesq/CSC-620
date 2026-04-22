@@ -41,8 +41,8 @@ function App() {
     addToCart(product, quantity);
     toast.success(
       quantity > 1
-        ? `Added ${quantity} × ${product.name} to cart.`
-        : `Added ${product.name} to cart.`,
+        ? `Added to cart: ${quantity} × ${product.name}`
+        : `Added to cart: ${product.name}`,
       {
         action: {
           label: "View",
