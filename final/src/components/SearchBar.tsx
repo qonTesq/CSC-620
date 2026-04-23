@@ -43,7 +43,7 @@ export function SearchBar({ query, onQueryChange }: SearchBarProps) {
               if (next === "") onQueryChange("");
             }}
           />
-          <Button type="submit" variant="outline" aria-label="Search">
+          <Button type="submit" aria-label="Search">
             <HugeiconsIcon icon={Search01Icon} strokeWidth={2} />
           </Button>
         </ButtonGroup>

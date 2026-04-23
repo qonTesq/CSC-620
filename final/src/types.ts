@@ -5,6 +5,7 @@ export interface Product {
   description: string;
   image: string;
   brand?: string;
+  category?: string;
   rating?: number;
   reviewCount?: number;
   features?: string[];

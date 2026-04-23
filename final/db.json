@@ -7,6 +7,7 @@
       "description": "Bluetooth over-ear headphones with noise cancellation",
       "image": "/images/product-wireless-headphones.svg",
       "brand": "SoundCore",
+      "category": "Audio",
       "rating": 4.5,
       "reviewCount": 1284,
       "features": [
@@ -29,6 +30,7 @@
       "description": "Fast charging braided cable with a 6-foot reach",
       "image": "/images/product-usb-c-cable.svg",
       "brand": "Anker",
+      "category": "Accessories",
       "rating": 4.7,
       "reviewCount": 5421,
       "features": [
@@ -51,6 +53,7 @@
       "description": "Adjustable aluminum stand for laptops up to 17 inches",
       "image": "/images/product-laptop-stand.svg",
       "brand": "Nulaxy",
+      "category": "Desk",
       "rating": 4.6,
       "reviewCount": 892,
       "features": [
@@ -73,6 +76,7 @@
       "description": "Compact RGB keyboard with tactile switches",
       "image": "/images/product-mechanical-keyboard.svg",
       "brand": "Keychron",
+      "category": "Peripherals",
       "rating": 4.4,
       "reviewCount": 2103,
       "features": [
@@ -95,6 +99,7 @@
       "description": "Extended desk mat with a non-slip rubber base",
       "image": "/images/product-mouse-pad.svg",
       "brand": "Corsair",
+      "category": "Desk",
       "rating": 4.8,
       "reviewCount": 674,
       "features": [
@@ -117,6 +122,7 @@
       "description": "1080p webcam with autofocus and built-in microphone",
       "image": "/images/product-webcam.svg",
       "brand": "Logitech",
+      "category": "Peripherals",
       "rating": 4.3,
       "reviewCount": 1537,
       "features": [
@@ -139,6 +145,7 @@
       "description": "Water-resistant Bluetooth speaker with 12-hour battery",
       "image": "/images/product-portable-speaker.svg",
       "brand": "JBL",
+      "category": "Audio",
       "rating": 4.6,
       "reviewCount": 3012,
       "features": [
@@ -161,6 +168,7 @@
       "description": "Shock-absorbing case with a soft-touch finish",
       "image": "/images/product-phone-case.svg",
       "brand": "Spigen",
+      "category": "Accessories",
       "rating": 4.5,
       "reviewCount": 4211,
       "features": [
@@ -183,6 +191,7 @@
       "description": "Dimmable lamp with adjustable color temperature",
       "image": "/images/product-led-desk-lamp.svg",
       "brand": "TaoTronics",
+      "category": "Desk",
       "rating": 4.7,
       "reviewCount": 985,
       "features": [
@@ -205,6 +214,7 @@
       "description": "Pocket-sized solid state drive with USB 3.2 support",
       "image": "/images/product-external-ssd.svg",
       "brand": "Samsung",
+      "category": "Accessories",
       "rating": 4.8,
       "reviewCount": 7620,
       "features": [

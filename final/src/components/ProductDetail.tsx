@@ -46,8 +46,13 @@ export function ProductDetail({
   };
 
   return (
-    <div className="flex flex-col gap-6">
-      <Button variant="ghost" size="sm" onClick={onBack} className="self-start">
+    <div className="flex flex-col gap-3">
+      <Button
+        variant="outline"
+        size="sm"
+        onClick={onBack}
+        className="self-start"
+      >
         <HugeiconsIcon icon={ArrowLeft02Icon} strokeWidth={2} />
         Back to products
       </Button>
