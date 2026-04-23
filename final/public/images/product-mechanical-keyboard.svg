@@ -1,0 +1,57 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="400"
+  height="400"
+  viewBox="0 0 400 400"
+  role="img"
+  aria-labelledby="p-kb-title p-kb-desc"
+>
+  <title id="p-kb-title">Mechanical keyboard</title>
+  <desc id="p-kb-desc">A square illustration of a compact mechanical keyboard</desc>
+
+  <defs>
+    <linearGradient id="p-kb-bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#eef2f7" />
+      <stop offset="100%" stop-color="#d9e2ec" />
+    </linearGradient>
+    <linearGradient id="p-kb-fg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#bcccdc" />
+      <stop offset="100%" stop-color="#9fb3c8" />
+    </linearGradient>
+  </defs>
+
+  <rect width="400" height="400" fill="url(#p-kb-bg)" />
+
+  <g transform="translate(200 210)">
+    <rect
+      x="-130"
+      y="-64"
+      width="260"
+      height="128"
+      rx="18"
+      fill="url(#p-kb-fg)"
+      stroke="#627d98"
+      stroke-width="6"
+    />
+    <g fill="#486581">
+      <rect x="-110" y="-44" width="24" height="20" rx="4" />
+      <rect x="-78" y="-44" width="24" height="20" rx="4" />
+      <rect x="-46" y="-44" width="24" height="20" rx="4" />
+      <rect x="-14" y="-44" width="24" height="20" rx="4" />
+      <rect x="18" y="-44" width="24" height="20" rx="4" />
+      <rect x="50" y="-44" width="24" height="20" rx="4" />
+      <rect x="82" y="-44" width="24" height="20" rx="4" />
+
+      <rect x="-110" y="-14" width="24" height="20" rx="4" />
+      <rect x="-78" y="-14" width="24" height="20" rx="4" />
+      <rect x="-46" y="-14" width="24" height="20" rx="4" />
+      <rect x="-14" y="-14" width="24" height="20" rx="4" />
+      <rect x="18" y="-14" width="24" height="20" rx="4" />
+      <rect x="50" y="-14" width="56" height="20" rx="4" />
+
+      <rect x="-110" y="18" width="40" height="20" rx="4" />
+      <rect x="-62" y="18" width="124" height="20" rx="4" />
+      <rect x="70" y="18" width="36" height="20" rx="4" />
+    </g>
+  </g>
+</svg>

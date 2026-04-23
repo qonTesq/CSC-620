@@ -1,0 +1,62 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="400"
+  height="400"
+  viewBox="0 0 400 400"
+  role="img"
+  aria-labelledby="p-pad-title p-pad-desc"
+>
+  <title id="p-pad-title">Mouse pad</title>
+  <desc id="p-pad-desc">A square illustration of an extended mouse pad viewed in perspective with a mouse resting on it</desc>
+
+  <defs>
+    <linearGradient id="p-pad-bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#eef2f7" />
+      <stop offset="100%" stop-color="#d9e2ec" />
+    </linearGradient>
+    <linearGradient id="p-pad-surface" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#bcccdc" />
+      <stop offset="100%" stop-color="#9fb3c8" />
+    </linearGradient>
+    <linearGradient id="p-pad-mouse" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#d9e2ec" />
+      <stop offset="100%" stop-color="#bcccdc" />
+    </linearGradient>
+  </defs>
+
+  <rect width="400" height="400" fill="url(#p-pad-bg)" />
+
+  <g transform="translate(200 220)">
+    <path
+      d="M-150 50 L-120 -40 L120 -40 L150 50 Z"
+      fill="url(#p-pad-surface)"
+      stroke="#627d98"
+      stroke-width="6"
+      stroke-linejoin="round"
+    />
+    <path
+      d="M-130 10 L130 10"
+      stroke="#627d98"
+      stroke-width="4"
+      stroke-linecap="round"
+      opacity="0.5"
+    />
+
+    <g transform="translate(30 -10)">
+      <path
+        d="M-34 -30 C-34 -52 -16 -60 0 -60 C16 -60 34 -52 34 -30 L34 20 C34 40 18 48 0 48 C-18 48 -34 40 -34 20 Z"
+        fill="url(#p-pad-mouse)"
+        stroke="#627d98"
+        stroke-width="6"
+      />
+      <path
+        d="M0 -60 L0 -6"
+        stroke="#627d98"
+        stroke-width="4"
+        stroke-linecap="round"
+        opacity="0.6"
+      />
+      <rect x="-5" y="-34" width="10" height="18" rx="5" fill="#486581" />
+    </g>
+  </g>
+</svg>
