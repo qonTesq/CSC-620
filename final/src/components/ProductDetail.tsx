@@ -53,7 +53,7 @@ export function ProductDetail({
       </Button>
 
       <Card>
-        <CardContent className="grid gap-6 md:grid-cols-2 md:py-0">
+        <CardContent className="grid gap-6 md:grid-cols-[minmax(0,380px)_1fr] md:py-0">
           <AspectRatio ratio={1} className="overflow-hidden rounded-3xl">
             <img
               src={image || "/images/product-placeholder.svg"}
@@ -119,22 +119,19 @@ export function ProductDetail({
               </div>
               <Button onClick={handleAdd}>Add to Cart</Button>
             </div>
+
+            {features && features.length > 0 && (
+              <div className="mt-4 flex flex-col gap-2">
+                <h3 className="font-heading text-lg">About this item</h3>
+                <ul className="list-disc pl-5 text-sm text-muted-foreground">
+                  {features.map((feature) => (
+                    <li key={feature}>{feature}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
         </CardContent>
-
-        {features && features.length > 0 && (
-          <>
-            <Separator />
-            <CardContent className="flex flex-col gap-2">
-              <h3 className="font-heading text-lg">About this item</h3>
-              <ul className="list-disc pl-5 text-sm text-muted-foreground">
-                {features.map((feature) => (
-                  <li key={feature}>{feature}</li>
-                ))}
-              </ul>
-            </CardContent>
-          </>
-        )}
 
         {specs && Object.keys(specs).length > 0 && (
           <>

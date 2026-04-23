@@ -83,10 +83,30 @@ function App() {
   }, []);
 
   return (
-    <div className="flex min-h-dvh flex-col">
+    <div className="flex min-h-dvh flex-col bg-[#f5f5f5]">
       <header className="sticky top-0 z-40 border-b border-border bg-background/80 backdrop-blur">
         <div className="mx-auto grid w-full max-w-7xl grid-cols-[auto_1fr_auto] items-center gap-4 px-6 py-4">
-          <h1 className="font-heading text-2xl">AmaZone</h1>
+          <h1 className="text-2xl leading-none font-black tracking-tighter">
+            <span className="relative inline-block">
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 100 24"
+                preserveAspectRatio="none"
+                className="pointer-events-none absolute top-[-0.55em] left-0 h-[0.7em] w-full text-primary"
+              >
+                <path
+                  d="M4 20 C28 2, 72 2, 96 20"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.4"
+                  strokeLinecap="round"
+                  vectorEffect="non-scaling-stroke"
+                />
+              </svg>
+              amaz
+            </span>
+            one
+          </h1>
           <div className="justify-self-center">
             {!selectedProduct && (
               <SearchBar query={searchQuery} onQueryChange={setSearchQuery} />
@@ -101,7 +121,7 @@ function App() {
             <HugeiconsIcon icon={ShoppingCart02Icon} strokeWidth={2} />
             Cart
             {itemCount > 0 && (
-              <Badge className="absolute -right-1 -top-1 h-5 min-w-5 px-1 tabular-nums">
+              <Badge className="absolute -right-3 -top-3 h-5 min-w-5 px-1 tabular-nums">
                 {itemCount}
               </Badge>
             )}

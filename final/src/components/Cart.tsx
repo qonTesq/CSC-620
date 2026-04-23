@@ -100,8 +100,10 @@ export function CartBody({
 
       <div className="flex flex-col gap-3 p-6">
         <div className="flex items-center justify-between">
-          <span className="text-sm text-muted-foreground">Total</span>
-          <strong className="text-lg">${total.toFixed(2)}</strong>
+          <span className="text-lg text-muted-foreground font-bold">Total</span>
+          <span className="font-heading font-semibold text-lg">
+            ${total.toFixed(2)}
+          </span>
         </div>
         <Button variant="destructive" className="w-full" onClick={onClear}>
           Clear
