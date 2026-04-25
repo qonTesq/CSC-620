@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import type { CSSProperties } from "react";
 import { toast } from "sonner";
 import { HugeiconsIcon } from "@hugeicons/react";
@@ -13,8 +13,8 @@ import {
 import type { IconSvgElement } from "@hugeicons/react";
 
 import { CartSidebar } from "./components/CartSidebar";
+import { ProductCard } from "./components/ProductCard";
 import { ProductDetail } from "./components/ProductDetail";
-import { ProductList } from "./components/ProductList";
 import { SearchBar } from "./components/SearchBar";
 import { Alert, AlertDescription, AlertTitle } from "./components/ui/alert";
 import { Badge } from "./components/ui/badge";
@@ -53,54 +53,37 @@ function AppContent() {
   const [error, setError] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
-  const [selectedProductId, setSelectedProductId] = useState<number | null>(
-    null,
-  );
+  const [selectedProductId, setSelectedProductId] = useState<
+    Product["id"] | null
+  >(null);
 
-  const categories = useMemo(() => {
-    const seen = new Set<string>();
-    const ordered: string[] = [];
-    for (const product of products) {
-      if (product.category && !seen.has(product.category)) {
-        seen.add(product.category);
-        ordered.push(product.category);
-      }
-    }
-    return ordered;
-  }, [products]);
-
-  const visibleProducts =
-    selectedCategory === "all"
-      ? products
-      : products.filter((product) => product.category === selectedCategory);
-  const { cartItems, addToCart, increment, decrement, clearCart, total } =
+  const { cartItems, addToCart, adjustQuantity, clearCart, total, itemCount } =
     useCart();
 
-  const {
-    isMobile,
-    open: sidebarOpen,
-    openMobile,
-    setOpen,
-    setOpenMobile,
-  } = useSidebar();
-  const cartOpen = isMobile ? openMobile : sidebarOpen;
+  const { isMobile, open, openMobile, setOpen, setOpenMobile, toggleSidebar } =
+    useSidebar();
+  const cartOpen = isMobile ? openMobile : open;
+  const openCart = () => (isMobile ? setOpenMobile(true) : setOpen(true));
 
-  const openCart = () => {
-    if (isMobile) setOpenMobile(true);
-    else setOpen(true);
-  };
+  const normalizedQuery = searchQuery.trim().toLowerCase();
+  const categories = [
+    ...new Set(
+      products
+        .map((product) => product.category)
+        .filter((category): category is string => Boolean(category)),
+    ),
+  ];
+  const visibleProducts = products.filter((product) => {
+    const matchesCategory =
+      selectedCategory === "all" || product.category === selectedCategory;
+    const matchesSearch =
+      !normalizedQuery || product.name.toLowerCase().includes(normalizedQuery);
 
-  const toggleCart = () => {
-    if (isMobile) setOpenMobile(!openMobile);
-    else setOpen(!sidebarOpen);
-  };
-
+    return matchesCategory && matchesSearch;
+  });
+  const cartItemsById = new Map(cartItems.map((item) => [item.id, item]));
   const selectedProduct =
-    selectedProductId !== null
-      ? (products.find((product) => product.id === selectedProductId) ?? null)
-      : null;
-
-  const itemCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+    products.find((product) => product.id === selectedProductId) ?? null;
 
   const handleAddToCart = (product: Product, quantity = 1) => {
     addToCart(product, quantity);
@@ -124,7 +107,6 @@ function AppContent() {
       try {
         setError("");
         const loadedProducts = await fetchProducts(signal);
-
         if (!signal.aborted) {
           setProducts(loadedProducts);
           setLoading(false);
@@ -138,7 +120,6 @@ function AppContent() {
     }
 
     void loadProducts();
-
     return () => abortController.abort();
   }, []);
 
@@ -177,7 +158,7 @@ function AppContent() {
               variant="outline"
               aria-label={`${cartOpen ? "Close" : "Open"} cart (${itemCount} items)`}
               aria-expanded={cartOpen}
-              onClick={toggleCart}
+              onClick={toggleSidebar}
               className="relative"
             >
               <HugeiconsIcon icon={ShoppingCart02Icon} strokeWidth={2} />
@@ -213,42 +194,40 @@ function AppContent() {
             <>
               <Tabs
                 value={selectedCategory}
-                onValueChange={(value) =>
-                  setSelectedCategory(
-                    typeof value === "string" ? value : "all",
-                  )
-                }
+                onValueChange={setSelectedCategory}
               >
-                <TabsList variant="line" className="w-full">
+                <TabsList className="w-full bg-background">
                   <TabsTrigger value="all">
-                    <HugeiconsIcon
-                      icon={DashboardSquare01Icon}
-                      strokeWidth={2}
-                    />
+                    <HugeiconsIcon icon={DashboardSquare01Icon} strokeWidth={2} />
                     All
                   </TabsTrigger>
                   {categories.map((category) => {
                     const icon = CATEGORY_ICONS[category];
                     return (
                       <TabsTrigger key={category} value={category}>
-                        {icon && (
-                          <HugeiconsIcon icon={icon} strokeWidth={2} />
-                        )}
+                        {icon && <HugeiconsIcon icon={icon} strokeWidth={2} />}
                         {category}
                       </TabsTrigger>
                     );
                   })}
                 </TabsList>
               </Tabs>
-              <ProductList
-                products={visibleProducts}
-                cartItems={cartItems}
-                searchQuery={searchQuery}
-                onAddToCart={handleAddToCart}
-                onIncrement={increment}
-                onDecrement={decrement}
-                onSelect={(product) => setSelectedProductId(product.id)}
-              />
+              {visibleProducts.length > 0 ? (
+                <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 md:gap-8">
+                  {visibleProducts.map((product) => (
+                    <ProductCard
+                      key={product.id}
+                      product={product}
+                      cartItem={cartItemsById.get(product.id)}
+                      onAddToCart={handleAddToCart}
+                      onAdjustQuantity={adjustQuantity}
+                      onSelect={(p) => setSelectedProductId(p.id)}
+                    />
+                  ))}
+                </div>
+              ) : (
+                <p className="text-muted-foreground">No products found</p>
+              )}
             </>
           )}
         </main>
@@ -256,9 +235,9 @@ function AppContent() {
 
       <CartSidebar
         cartItems={cartItems}
+        itemCount={itemCount}
         total={total}
-        onIncrement={increment}
-        onDecrement={decrement}
+        onAdjustQuantity={adjustQuantity}
         onClear={clearCart}
       />
     </>

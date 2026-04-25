@@ -9,36 +9,37 @@ function readCart(): CartItem[] {
     const parsed: unknown = JSON.parse(
       window.localStorage.getItem(STORAGE_KEY) ?? "[]",
     );
-
-    return Array.isArray(parsed) ? parsed.filter(isCartItem) : [];
+    return Array.isArray(parsed)
+      ? parsed.map(normalizeCartItem).filter((item): item is CartItem => !!item)
+      : [];
   } catch {
     return [];
   }
 }
 
-function isCartItem(value: unknown): value is CartItem {
-  if (!value || typeof value !== "object") {
-    return false;
-  }
+function normalizeCartItem(value: unknown): CartItem | null {
+  if (!value || typeof value !== "object") return null;
 
   const item = value as Record<string, unknown>;
+  const { id, name, price, quantity, brand } = item;
 
-  return (
-    typeof item.id === "number" &&
-    typeof item.name === "string" &&
-    typeof item.price === "number" &&
-    typeof item.quantity === "number" &&
-    item.quantity > 0 &&
-    (item.brand === undefined || typeof item.brand === "string")
-  );
-}
+  if (
+    (typeof id !== "number" && typeof id !== "string") ||
+    typeof name !== "string" ||
+    typeof price !== "number" ||
+    typeof quantity !== "number" ||
+    quantity <= 0
+  ) {
+    return null;
+  }
 
-function changeQuantity(cartItems: CartItem[], id: number, step: 1 | -1) {
-  return cartItems
-    .map((item) =>
-      item.id === id ? { ...item, quantity: item.quantity + step } : item,
-    )
-    .filter((item) => item.quantity > 0);
+  return {
+    id: String(id),
+    name,
+    price,
+    quantity,
+    ...(typeof brand === "string" ? { brand } : {}),
+  };
 }
 
 export function useCart() {
@@ -48,24 +49,22 @@ export function useCart() {
     try {
       window.localStorage.setItem(STORAGE_KEY, JSON.stringify(cartItems));
     } catch {
-      // Ignore storage failures so cart interactions still work in memory.
+      // Keep cart usable in memory when storage is unavailable.
     }
   }, [cartItems]);
 
   const addToCart = (product: Product, quantity = 1) =>
-    setCartItems((currentItems) => {
-      const existing = currentItems.find((item) => item.id === product.id);
-
+    setCartItems((items) => {
+      const existing = items.find((item) => item.id === product.id);
       if (existing) {
-        return currentItems.map((item) =>
+        return items.map((item) =>
           item.id === product.id
             ? { ...item, quantity: item.quantity + quantity }
             : item,
         );
       }
-
       return [
-        ...currentItems,
+        ...items,
         {
           id: product.id,
           name: product.name,
@@ -76,11 +75,14 @@ export function useCart() {
       ];
     });
 
-  const increment = (id: number) =>
-    setCartItems((currentItems) => changeQuantity(currentItems, id, 1));
-
-  const decrement = (id: number) =>
-    setCartItems((currentItems) => changeQuantity(currentItems, id, -1));
+  const adjustQuantity = (id: Product["id"], delta: 1 | -1) =>
+    setCartItems((items) =>
+      items
+        .map((item) =>
+          item.id === id ? { ...item, quantity: item.quantity + delta } : item,
+        )
+        .filter((item) => item.quantity > 0),
+    );
 
   const clearCart = () => setCartItems([]);
 
@@ -88,13 +90,7 @@ export function useCart() {
     (sum, item) => sum + item.price * item.quantity,
     0,
   );
+  const itemCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
-  return {
-    cartItems,
-    addToCart,
-    increment,
-    decrement,
-    clearCart,
-    total,
-  };
+  return { cartItems, addToCart, adjustQuantity, clearCart, total, itemCount };
 }

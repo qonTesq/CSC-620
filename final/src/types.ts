@@ -1,5 +1,7 @@
+export type ProductId = string;
+
 export interface Product {
-  id: number;
+  id: ProductId;
   name: string;
   price: number;
   description: string;
@@ -12,10 +14,6 @@ export interface Product {
   specs?: Record<string, string>;
 }
 
-export interface CartItem {
-  id: number;
-  name: string;
-  price: number;
+export type CartItem = Pick<Product, "id" | "name" | "price" | "brand"> & {
   quantity: number;
-  brand?: string;
-}
+};

@@ -1,10 +1,3 @@
-import { HugeiconsIcon } from "@hugeicons/react";
-import {
-  Add01Icon,
-  Delete02Icon,
-  MinusSignIcon,
-} from "@hugeicons/core-free-icons";
-
 import type { CartItem } from "../types";
 
 import { Button } from "@/components/ui/button";
@@ -15,31 +8,32 @@ import {
   SidebarFooter,
   SidebarHeader,
 } from "@/components/ui/sidebar";
+import { QuantityStepper } from "./QuantityStepper";
 
 interface CartSidebarProps {
   cartItems: CartItem[];
+  itemCount: number;
   total: number;
-  onIncrement: (id: number) => void;
-  onDecrement: (id: number) => void;
+  onAdjustQuantity: (id: CartItem["id"], delta: 1 | -1) => void;
   onClear: () => void;
 }
 
 export function CartSidebar({
   cartItems,
+  itemCount,
   total,
-  onIncrement,
-  onDecrement,
+  onAdjustQuantity,
   onClear,
 }: CartSidebarProps) {
-  const itemCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
   const isEmpty = cartItems.length === 0;
+  const itemLabel = itemCount === 1 ? "item" : "items";
 
   return (
     <Sidebar side="right" collapsible="offcanvas" className="border-l">
       <SidebarHeader className="gap-1 p-6 pb-4">
-        <h2 className="font-heading text-2xl font-semibold tracking-tight">Cart</h2>
+        <h2 className="font-heading text-2xl tracking-tight">Cart</h2>
         <p className="text-sm text-muted-foreground">
-          {itemCount} item(s) in your cart
+          {itemCount} {itemLabel} in your cart
         </p>
       </SidebarHeader>
 
@@ -48,59 +42,33 @@ export function CartSidebar({
           <p className="text-sm text-muted-foreground">Cart is empty</p>
         ) : (
           <ul className="flex flex-col gap-4 pb-4">
-            {cartItems.map((item) => {
-              const singleItem = item.quantity === 1;
-
-              return (
-                <li key={item.id} className="flex flex-col gap-2">
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="flex flex-col">
-                      <span className="text-sm font-medium">{item.name}</span>
-                      {item.brand && (
-                        <span className="text-xs text-muted-foreground">
-                          {item.brand}
-                        </span>
-                      )}
-                    </div>
-                    <span className="text-sm font-medium">
-                      ${(item.price * item.quantity).toFixed(2)}
-                    </span>
+            {cartItems.map((item) => (
+              <li key={item.id} className="flex flex-col gap-2">
+                <div className="flex items-start justify-between gap-3">
+                  <div className="flex flex-col">
+                    <span className="text-sm font-medium">{item.name}</span>
+                    {item.brand && (
+                      <span className="text-xs text-muted-foreground">
+                        {item.brand}
+                      </span>
+                    )}
                   </div>
+                  <span className="text-sm font-medium">
+                    ${(item.price * item.quantity).toFixed(2)}
+                  </span>
+                </div>
 
-                  <div className="flex items-center gap-2">
-                    <Button
-                      size="icon-sm"
-                      variant={singleItem ? "destructive" : "outline"}
-                      aria-label={
-                        singleItem
-                          ? `Remove ${item.name} from cart`
-                          : `Decrease quantity of ${item.name}`
-                      }
-                      onClick={() => onDecrement(item.id)}
-                    >
-                      <HugeiconsIcon
-                        icon={singleItem ? Delete02Icon : MinusSignIcon}
-                        strokeWidth={2}
-                      />
-                    </Button>
-                    <span
-                      className="min-w-6 text-center text-sm tabular-nums"
-                      aria-label={`Quantity ${item.quantity}`}
-                    >
-                      {item.quantity}
-                    </span>
-                    <Button
-                      size="icon-sm"
-                      variant="outline"
-                      aria-label={`Increase quantity of ${item.name}`}
-                      onClick={() => onIncrement(item.id)}
-                    >
-                      <HugeiconsIcon icon={Add01Icon} strokeWidth={2} />
-                    </Button>
-                  </div>
-                </li>
-              );
-            })}
+                <div className="flex items-center gap-2">
+                  <QuantityStepper
+                    quantity={item.quantity}
+                    label={item.name}
+                    removeOnZero
+                    onIncrement={() => onAdjustQuantity(item.id, 1)}
+                    onDecrement={() => onAdjustQuantity(item.id, -1)}
+                  />
+                </div>
+              </li>
+            ))}
           </ul>
         )}
       </SidebarContent>

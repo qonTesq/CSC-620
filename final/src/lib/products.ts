@@ -1,6 +1,7 @@
 import type { Product } from "../types";
 
 const API_URL = "http://localhost:3001/products";
+export const PRODUCT_PLACEHOLDER_IMAGE = "/images/product-placeholder.svg";
 
 type ProductResponse = Omit<Product, "id"> & { id: number | string };
 
@@ -13,7 +14,7 @@ function normalizeProducts(products: unknown): Product[] {
     const normalizedProduct = product as ProductResponse;
     return {
       ...normalizedProduct,
-      id: Number(normalizedProduct.id),
+      id: String(normalizedProduct.id),
     };
   });
 }

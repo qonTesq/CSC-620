@@ -1,19 +1,15 @@
 import { useState } from "react";
 import { HugeiconsIcon } from "@hugeicons/react";
-import {
-  Add01Icon,
-  ArrowLeft02Icon,
-  MinusSignIcon,
-  StarIcon,
-} from "@hugeicons/core-free-icons";
+import { ArrowLeft02Icon, StarIcon } from "@hugeicons/core-free-icons";
 
 import type { Product } from "../types";
+import { PRODUCT_PLACEHOLDER_IMAGE } from "../lib/products";
 
-import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { QuantityStepper } from "./QuantityStepper";
 
 interface ProductDetailProps {
   product: Product;
@@ -59,13 +55,11 @@ export function ProductDetail({
 
       <Card>
         <CardContent className="grid gap-6 md:grid-cols-[minmax(0,380px)_1fr] md:py-0">
-          <AspectRatio ratio={1} className="overflow-hidden rounded-3xl">
-            <img
-              src={image || "/images/product-placeholder.svg"}
-              alt={name}
-              className="size-full object-cover"
-            />
-          </AspectRatio>
+          <img
+            src={image || PRODUCT_PLACEHOLDER_IMAGE}
+            alt={name}
+            className="aspect-square w-full overflow-hidden rounded-3xl object-cover"
+          />
 
           <div className="flex flex-col gap-3">
             {brand && (
@@ -97,30 +91,14 @@ export function ProductDetail({
 
             <div className="mt-2 flex flex-wrap items-center gap-3">
               <div className="flex items-center gap-3">
-                <Button
-                  size="icon"
-                  variant="outline"
-                  aria-label={`Decrease quantity of ${name}`}
-                  onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-                  disabled={quantity <= 1}
-                >
-                  <HugeiconsIcon icon={MinusSignIcon} strokeWidth={2} />
-                </Button>
-                <span
-                  className="text-sm font-medium tabular-nums"
-                  aria-label={`Quantity ${quantity}`}
-                >
-                  {quantity}
-                </span>
-                <Button
-                  size="icon"
-                  variant="outline"
-                  aria-label={`Increase quantity of ${name}`}
-                  onClick={() => setQuantity((q) => Math.min(10, q + 1))}
-                  disabled={quantity >= 10}
-                >
-                  <HugeiconsIcon icon={Add01Icon} strokeWidth={2} />
-                </Button>
+                <QuantityStepper
+                  quantity={quantity}
+                  label={name}
+                  size="md"
+                  max={10}
+                  onIncrement={() => setQuantity((q) => Math.min(10, q + 1))}
+                  onDecrement={() => setQuantity((q) => Math.max(1, q - 1))}
+                />
               </div>
               <Button onClick={handleAdd}>Add to Cart</Button>
             </div>

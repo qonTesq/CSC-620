@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from "react";
+import { useState } from "react";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Search01Icon } from "@hugeicons/core-free-icons";
 
@@ -15,15 +15,13 @@ interface SearchBarProps {
 export function SearchBar({ query, onQueryChange }: SearchBarProps) {
   const [draft, setDraft] = useState(query);
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    onQueryChange(draft.trim());
-  };
-
   return (
     <form
       role="search"
-      onSubmit={handleSubmit}
+      onSubmit={(event) => {
+        event.preventDefault();
+        onQueryChange(draft.trim());
+      }}
       className="w-full min-w-72 max-w-lg sm:w-96"
     >
       <Field>
@@ -40,7 +38,7 @@ export function SearchBar({ query, onQueryChange }: SearchBarProps) {
             onChange={(event) => {
               const next = event.target.value;
               setDraft(next);
-              if (next === "") onQueryChange("");
+              if (!next) onQueryChange("");
             }}
           />
           <Button type="submit" aria-label="Search">
