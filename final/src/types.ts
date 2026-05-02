@@ -1,5 +1,6 @@
 export type ProductId = string;
 
+// Product is the normalized catalog record that the UI renders everywhere.
 export interface Product {
   id: ProductId;
   name: string;
@@ -14,6 +15,7 @@ export interface Product {
   specs?: Record<string, string>;
 }
 
+// Cart rows keep only the fields needed for totals and display.
 export type CartItem = Pick<Product, "id" | "name" | "price" | "brand"> & {
   quantity: number;
 };

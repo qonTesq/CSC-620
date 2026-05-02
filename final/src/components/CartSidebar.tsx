@@ -25,6 +25,7 @@ export function CartSidebar({
   onAdjustQuantity,
   onClear,
 }: CartSidebarProps) {
+  // Reuse the same empty-state and label logic for the drawer header.
   const isEmpty = cartItems.length === 0;
   const itemLabel = itemCount === 1 ? "item" : "items";
 
@@ -38,9 +39,11 @@ export function CartSidebar({
       </SidebarHeader>
 
       <SidebarContent className="px-6">
+        {/* Show one compact empty state instead of rendering an empty list. */}
         {isEmpty ? (
           <p className="text-sm text-muted-foreground">Cart is empty</p>
         ) : (
+          // Each cart row shows its subtotal plus quantity controls.
           <ul className="flex flex-col gap-4 pb-4">
             {cartItems.map((item) => (
               <li key={item.id} className="flex flex-col gap-2">
@@ -77,6 +80,7 @@ export function CartSidebar({
         <>
           <Separator />
           <SidebarFooter className="gap-3 p-6">
+            {/* Keep the total visible and the clear action obvious. */}
             <div className="flex items-center justify-between">
               <span className="text-lg font-bold text-muted-foreground">
                 Total

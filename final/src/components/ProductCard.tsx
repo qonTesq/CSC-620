@@ -29,17 +29,20 @@ export function ProductCard({
   const { brand, image, name, price } = product;
 
   return (
+    // The whole card opens the detail view except for controls in the footer.
     <Card
       size="sm"
       onClick={() => onSelect(product)}
       className="group flex h-full cursor-pointer flex-col"
     >
+      {/* Fall back to a placeholder image if the product has none. */}
       <img
         src={image || PRODUCT_PLACEHOLDER_IMAGE}
         alt={name}
         className="aspect-square w-full object-cover transition-transform duration-300 [.group:hover:not(:has([data-slot=card-footer]:hover))_&]:scale-105"
       />
       <CardHeader className="gap-2">
+        {/* Show the brand badge only when the data includes one. */}
         {brand && (
           <div>
             <Badge variant="secondary">{brand}</Badge>
@@ -52,6 +55,7 @@ export function ProductCard({
       </CardHeader>
       <CardFooter>
         {cartItem ? (
+          // Stop bubbling so quantity controls do not reopen the card.
           <div
             className="flex w-full items-center justify-between gap-2"
             onClick={(event) => event.stopPropagation()}
@@ -65,6 +69,7 @@ export function ProductCard({
             />
           </div>
         ) : (
+          // A single call-to-action adds the item and keeps the card compact.
           <Button
             className="w-full"
             onClick={(event) => {

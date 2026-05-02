@@ -13,6 +13,7 @@ interface SearchBarProps {
 }
 
 export function SearchBar({ query, onQueryChange }: SearchBarProps) {
+  // Keep a draft value so users can type before committing the filter.
   const [draft, setDraft] = useState(query);
 
   return (
@@ -20,6 +21,7 @@ export function SearchBar({ query, onQueryChange }: SearchBarProps) {
       role="search"
       onSubmit={(event) => {
         event.preventDefault();
+        // Commit the trimmed query when the user submits the search form.
         onQueryChange(draft.trim());
       }}
       className="w-full min-w-72 max-w-lg sm:w-96"
@@ -38,6 +40,7 @@ export function SearchBar({ query, onQueryChange }: SearchBarProps) {
             onChange={(event) => {
               const next = event.target.value;
               setDraft(next);
+              // Clearing the field should immediately restore the full product list.
               if (!next) onQueryChange("");
             }}
           />

@@ -36,6 +36,7 @@ export function ProductDetail({
 
   const [quantity, setQuantity] = useState(1);
 
+  // Reset the picker after adding so repeat adds start from a clean default.
   const handleAdd = () => {
     onAddToCart(product, quantity);
     setQuantity(1);
@@ -55,6 +56,7 @@ export function ProductDetail({
 
       <Card>
         <CardContent className="grid gap-6 md:grid-cols-[minmax(0,380px)_1fr] md:py-0">
+          {/* Detail view keeps the image large and prominent. */}
           <img
             src={image || PRODUCT_PLACEHOLDER_IMAGE}
             alt={name}
@@ -62,6 +64,7 @@ export function ProductDetail({
           />
 
           <div className="flex flex-col gap-3">
+            {/* Metadata appears only when present in the product payload. */}
             {brand && (
               <div>
                 <Badge variant="secondary">{brand}</Badge>
@@ -69,6 +72,7 @@ export function ProductDetail({
             )}
             <h2 className="font-heading text-2xl">{name}</h2>
 
+            {/* Ratings and review counts are optional API fields. */}
             {(rating !== undefined || reviewCount !== undefined) && (
               <div className="flex items-center gap-2">
                 {rating !== undefined && (
@@ -89,6 +93,7 @@ export function ProductDetail({
 
             <p className="text-sm text-muted-foreground">{description}</p>
 
+            {/* Quantity is capped locally so add-to-cart stays bounded. */}
             <div className="mt-2 flex flex-wrap items-center gap-3">
               <div className="flex items-center gap-3">
                 <QuantityStepper
@@ -103,6 +108,7 @@ export function ProductDetail({
               <Button onClick={handleAdd}>Add to Cart</Button>
             </div>
 
+            {/* Feature bullets render only when the dataset includes them. */}
             {features && features.length > 0 && (
               <div className="mt-4 flex flex-col gap-2">
                 <h3 className="font-heading text-lg">About this item</h3>

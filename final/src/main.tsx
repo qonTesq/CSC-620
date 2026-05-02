@@ -5,6 +5,7 @@ import "./index.css";
 import App from "./App";
 import { Toaster } from "./components/ui/sonner";
 
+// Mount the app once with the global toast host beside it.
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <App />

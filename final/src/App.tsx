@@ -29,6 +29,7 @@ import type { Product } from "./types";
 const LOAD_ERROR_MESSAGE =
   "Failed to load products. Wait a moment and refresh if the dev servers are still starting.";
 
+// Map each catalog category to the icon used in the filter tabs.
 const CATEGORY_ICONS: Record<string, IconSvgElement> = {
   Audio: HeadphonesIcon,
   Peripherals: KeyboardIcon,
@@ -62,10 +63,14 @@ function AppContent() {
 
   const { isMobile, open, openMobile, setOpen, setOpenMobile, toggleSidebar } =
     useSidebar();
+  // Use the matching sidebar state for the current viewport.
   const cartOpen = isMobile ? openMobile : open;
+  // Keep one helper that opens the cart in the correct mode.
   const openCart = () => (isMobile ? setOpenMobile(true) : setOpen(true));
 
+  // Normalize the search text once so filtering stays cheap and case-insensitive.
   const normalizedQuery = searchQuery.trim().toLowerCase();
+  // Derive tabs from the loaded data so new categories appear automatically.
   const categories = [
     ...new Set(
       products
@@ -73,6 +78,7 @@ function AppContent() {
         .filter((category): category is string => Boolean(category)),
     ),
   ];
+  // Apply category and text filters before rendering the grid.
   const visibleProducts = products.filter((product) => {
     const matchesCategory =
       selectedCategory === "all" || product.category === selectedCategory;
@@ -81,10 +87,12 @@ function AppContent() {
 
     return matchesCategory && matchesSearch;
   });
+  // Make cart lookups O(1) when cards need to know whether an item is already in the cart.
   const cartItemsById = new Map(cartItems.map((item) => [item.id, item]));
   const selectedProduct =
     products.find((product) => product.id === selectedProductId) ?? null;
 
+  // Add the item, then immediately surface the cart so the user sees the result.
   const handleAddToCart = (product: Product, quantity = 1) => {
     addToCart(product, quantity);
     openCart();
@@ -96,16 +104,19 @@ function AppContent() {
   };
 
   useEffect(() => {
+    // Clear any stale toast once the cart drawer is visible again.
     if (cartOpen) toast.dismiss();
   }, [cartOpen]);
 
   useEffect(() => {
+    // Abort in-flight requests when the component unmounts or a newer load supersedes it.
     const abortController = new AbortController();
     const { signal } = abortController;
 
     async function loadProducts() {
       try {
         setError("");
+        // Abort-aware fetch keeps state updates out of unmounted or restarted loads.
         const loadedProducts = await fetchProducts(signal);
         if (!signal.aborted) {
           setProducts(loadedProducts);
@@ -125,6 +136,7 @@ function AppContent() {
 
   return (
     <>
+      {/* Shell layout keeps the catalog centered with the cart mounted alongside it. */}
       <div className="flex min-h-dvh min-w-0 flex-1 flex-col bg-[#f5f5f5]">
         <header className="sticky top-0 z-40 border-b border-border bg-background/80 backdrop-blur">
           <div className="mx-auto grid w-full max-w-7xl grid-cols-[auto_1fr_auto] items-center gap-4 px-6 py-4">
@@ -150,6 +162,7 @@ function AppContent() {
               one
             </h1>
             <div className="justify-self-center">
+              {/* Hide the search UI while a product detail view is open. */}
               {!selectedProduct && (
                 <SearchBar query={searchQuery} onQueryChange={setSearchQuery} />
               )}
@@ -180,18 +193,21 @@ function AppContent() {
               onBack={() => setSelectedProductId(null)}
             />
           ) : loading ? (
+            // Show skeleton cards while the catalog is still loading.
             <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
               {Array.from({ length: 8 }).map((_, index) => (
                 <Skeleton key={index} className="h-72 rounded-4xl" />
               ))}
             </div>
           ) : error ? (
+            // Surface fetch failures with a single recoverable message.
             <Alert variant="destructive">
               <AlertTitle>Unable to load products</AlertTitle>
               <AlertDescription>{error}</AlertDescription>
             </Alert>
           ) : (
             <>
+              {/* Category tabs stay in sync with whatever the API returns. */}
               <Tabs
                 value={selectedCategory}
                 onValueChange={setSelectedCategory}
@@ -213,6 +229,7 @@ function AppContent() {
                 </TabsList>
               </Tabs>
               {visibleProducts.length > 0 ? (
+                // Render the filtered product grid with per-card cart state.
                 <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 md:gap-8">
                   {visibleProducts.map((product) => (
                     <ProductCard
@@ -226,6 +243,7 @@ function AppContent() {
                   ))}
                 </div>
               ) : (
+                // Empty search/category results use a simple text fallback.
                 <p className="text-muted-foreground">No products found</p>
               )}
             </>
@@ -233,6 +251,7 @@ function AppContent() {
         </main>
       </div>
 
+      {/* Cart stays mounted so the sidebar can open from any view. */}
       <CartSidebar
         cartItems={cartItems}
         itemCount={itemCount}

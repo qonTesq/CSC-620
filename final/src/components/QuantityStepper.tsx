@@ -26,9 +26,12 @@ export function QuantityStepper({
   removeOnZero = false,
   max,
 }: QuantityStepperProps) {
+  // Switch the left button between decrement and remove when the cart item reaches one.
   const buttonSize = size === "sm" ? "icon-sm" : "icon";
   const showRemove = removeOnZero && quantity === 1;
+  // Keep the lower bound at one unless the caller wants the control to remove the item.
   const atMin = !removeOnZero && quantity <= 1;
+  // Honor a caller-provided upper bound for detail and bulk-add flows.
   const atMax = max !== undefined && quantity >= max;
 
   return (
@@ -51,6 +54,7 @@ export function QuantityStepper({
         className="min-w-6 text-center text-sm tabular-nums"
         aria-label={`Quantity ${quantity}`}
       >
+        {/* Show the current amount in a stable, easy-to-scan layout. */}
         {quantity}
       </span>
       <Button

@@ -4,8 +4,10 @@
 @import "@fontsource-variable/public-sans";
 @import "@fontsource-variable/fraunces";
 
+/* Match the dark theme selector used by the app shell. */
 @custom-variant dark (&:is(.dark *));
 
+/* Light theme tokens define the default storefront look. */
 :root {
     --background: oklch(1 0 0);
     --foreground: oklch(0.145 0 0);
@@ -41,6 +43,7 @@
     --sidebar-ring: oklch(0.708 0 0);
 }
 
+/* Dark theme overrides the same tokens instead of swapping classes everywhere. */
 .dark {
     --background: oklch(0.145 0 0);
     --foreground: oklch(0.985 0 0);
@@ -75,6 +78,7 @@
     --sidebar-ring: oklch(0.556 0 0);
 }
 
+/* Tailwind theme aliases keep the component API aligned with the CSS variables. */
 @theme inline {
     --font-sans: 'Public Sans Variable', sans-serif;
     --font-heading: 'Fraunces Variable', serif;
@@ -118,6 +122,7 @@
     --radius-4xl: calc(var(--radius) * 2.6);
 }
 
+/* Base styles set the minimum app-wide typography and surface colors. */
 @layer base {
   * {
     @apply border-border outline-ring/50;

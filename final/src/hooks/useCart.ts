@@ -6,6 +6,7 @@ const STORAGE_KEY = "shopping-cart";
 
 function readCart(): CartItem[] {
   try {
+    // Hydrate safely so a malformed localStorage entry never breaks the cart.
     const parsed: unknown = JSON.parse(
       window.localStorage.getItem(STORAGE_KEY) ?? "[]",
     );
@@ -18,6 +19,7 @@ function readCart(): CartItem[] {
 }
 
 function normalizeCartItem(value: unknown): CartItem | null {
+  // Reject anything that does not look like a stored cart row.
   if (!value || typeof value !== "object") return null;
 
   const item = value as Record<string, unknown>;
@@ -43,16 +45,19 @@ function normalizeCartItem(value: unknown): CartItem | null {
 }
 
 export function useCart() {
+  // Start from persisted state when available, then keep everything local to the hook.
   const [cartItems, setCartItems] = useState<CartItem[]>(readCart);
 
   useEffect(() => {
     try {
+      // Persist the latest cart state, but keep the in-memory cart if storage fails.
       window.localStorage.setItem(STORAGE_KEY, JSON.stringify(cartItems));
     } catch {
       // Keep cart usable in memory when storage is unavailable.
     }
   }, [cartItems]);
 
+  // Merge quantities when the product already exists in the cart.
   const addToCart = (product: Product, quantity = 1) =>
     setCartItems((items) => {
       const existing = items.find((item) => item.id === product.id);
@@ -75,6 +80,7 @@ export function useCart() {
       ];
     });
 
+  // Step items up or down, removing rows that hit zero.
   const adjustQuantity = (id: Product["id"], delta: 1 | -1) =>
     setCartItems((items) =>
       items
@@ -84,8 +90,10 @@ export function useCart() {
         .filter((item) => item.quantity > 0),
     );
 
+  // Clear the cart in one shot.
   const clearCart = () => setCartItems([]);
 
+  // Derive totals from the current cart instead of storing duplicate state.
   const total = cartItems.reduce(
     (sum, item) => sum + item.price * item.quantity,
     0,
