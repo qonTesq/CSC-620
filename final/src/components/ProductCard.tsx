@@ -3,12 +3,7 @@ import { PRODUCT_PLACEHOLDER_IMAGE } from "../lib/products";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { QuantityStepper } from "./QuantityStepper";
 
 interface ProductCardProps {
@@ -48,7 +43,7 @@ export function ProductCard({
             <Badge variant="secondary">{brand}</Badge>
           </div>
         )}
-        <CardTitle className="line-clamp-2 [.group:hover:not(:has([data-slot=card-footer]:hover))_&]:underline">
+        <CardTitle className="line-clamp-2 text-base group-data-[size=sm]/card:text-base [.group:hover:not(:has([data-slot=card-footer]:hover))_&]:underline">
           {name}
         </CardTitle>
         <p className="text-lg">${price.toFixed(2)}</p>

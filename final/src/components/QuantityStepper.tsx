@@ -40,7 +40,9 @@ export function QuantityStepper({
         size={buttonSize}
         variant={showRemove ? "destructive" : "outline"}
         aria-label={
-          showRemove ? `Remove ${label} from cart` : `Decrease quantity of ${label}`
+          showRemove
+            ? `Remove ${label} from cart`
+            : `Decrease quantity of ${label}`
         }
         disabled={atMin}
         onClick={onDecrement}

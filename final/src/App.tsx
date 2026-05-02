@@ -214,7 +214,10 @@ function AppContent() {
               >
                 <TabsList className="w-full bg-background">
                   <TabsTrigger value="all">
-                    <HugeiconsIcon icon={DashboardSquare01Icon} strokeWidth={2} />
+                    <HugeiconsIcon
+                      icon={DashboardSquare01Icon}
+                      strokeWidth={2}
+                    />
                     All
                   </TabsTrigger>
                   {categories.map((category) => {
