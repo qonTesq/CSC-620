@@ -19,9 +19,15 @@ import { SearchBar } from "./components/SearchBar";
 import { Alert, AlertDescription, AlertTitle } from "./components/ui/alert";
 import { Badge } from "./components/ui/badge";
 import { Button } from "./components/ui/button";
+import { Kbd, KbdGroup } from "./components/ui/kbd";
 import { SidebarProvider, useSidebar } from "./components/ui/sidebar";
 import { Skeleton } from "./components/ui/skeleton";
 import { Tabs, TabsList, TabsTrigger } from "./components/ui/tabs";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "./components/ui/tooltip";
 import { useCart } from "./hooks/useCart";
 import { fetchProducts } from "./lib/products";
 import type { Product } from "./types";
@@ -167,21 +173,33 @@ function AppContent() {
                 <SearchBar query={searchQuery} onQueryChange={setSearchQuery} />
               )}
             </div>
-            <Button
-              variant="outline"
-              aria-label={`${cartOpen ? "Close" : "Open"} cart (${itemCount} items)`}
-              aria-expanded={cartOpen}
-              onClick={toggleSidebar}
-              className="relative"
-            >
-              <HugeiconsIcon icon={ShoppingCart02Icon} strokeWidth={2} />
-              Cart
-              {itemCount > 0 && (
-                <Badge className="absolute -right-3 -top-3 h-5 min-w-5 px-1 tabular-nums">
-                  {itemCount}
-                </Badge>
-              )}
-            </Button>
+            <Tooltip>
+              <TooltipTrigger
+                render={
+                  <Button
+                    variant="outline"
+                    aria-label={`${cartOpen ? "Close" : "Open"} cart (${itemCount} items)`}
+                    aria-expanded={cartOpen}
+                    onClick={toggleSidebar}
+                    className="relative items-center"
+                  >
+                    <HugeiconsIcon icon={ShoppingCart02Icon} strokeWidth={2} />
+                    Cart
+                    {itemCount > 0 && (
+                      <Badge className="absolute -right-3 -top-3 h-5 min-w-5 px-1 tabular-nums">
+                        {itemCount}
+                      </Badge>
+                    )}
+                  </Button>
+                }
+              />
+              <TooltipContent className="flex items-center justify-center px-2! has-data-[slot=kbd]:pr-2!">
+                <KbdGroup className="text-[10px]">
+                  <Kbd className="h-4 min-w-4 px-1 text-[10px]">CTRL</Kbd>
+                  <Kbd className="h-4 min-w-4 px-1 text-[10px]">B</Kbd>
+                </KbdGroup>
+              </TooltipContent>
+            </Tooltip>
           </div>
         </header>
 
